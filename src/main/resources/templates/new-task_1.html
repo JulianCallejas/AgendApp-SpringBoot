@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <!-- CSS only -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous" />
+        <!-- JavaScript Bundle with Popper -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" />
+        <link rel="stylesheet" href="/css/agregar.css" />
+
+        <title>Agendapp-tarea</title>
+
+    </head>
+    <body>
+
+
+        <!-- Formulario Crear Tarea -->
+        {% if accion == "crear" %}
+        <div class="contenedor">
+            <div class="caja-descripcion">
+                <form class="col-s12" action="/newtask" method="POST">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                        <row>
+                            <div class="text">
+                                <p>Nueva Tarea </p>
+                            </div>
+                        </row>
+
+                        <!-- Mensajes de resultado -->
+                        {% with messages = get_flashed_messages() %}
+                        {% if messages %}
+
+                        {% if error %}
+                        <div class="collapse show" id="mensaje">
+                            <div class="card border-danger">
+                                <div class="card-header bg-danger" style="--bs-bg-opacity: .2;">
+                                    <button type="button" class="btn-close" data-bs-toggle="collapse" data-bs-target="#mensaje" aria-expanded="false" aria-controls="mensaje"></button>
+                                    <b>Error</b>
+                                </div>
+                                <div class="card-body bg-danger" style="--bs-bg-opacity: .1;">
+                                    {% for message in messages %}
+                                    <h5 class="card-title">{{ message }}</h5>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                        {% else %}
+                        <div class="collapse show" id="mensaje">
+                            <div class="card border-success">
+
+                                <div class="card-header bg-success" style="--bs-bg-opacity: .2;">
+                                    <button type="button" class="btn-close" data-bs-toggle="collapse" data-bs-target="#mensaje" aria-expanded="false" aria-controls="mensaje"></button>
+                                    <b>Guardado</b>
+                                </div>
+                                <div class="card-body bg-success" style="--bs-bg-opacity: .1;">
+                                    {% for message in messages %}
+                                    <h5 class="card-title">{{ message }}</h5>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                        {% endif %}
+                        {% endif %}
+                        {% endwith %}
+
+                        <div style="margin: .4rem 0; width: 350px; display: flex; flex-direction: row;">
+                            <div>
+                                <label for="fecha_maxima">**fecha:</label>
+                                <input type="date" id="fecha_maxima" name="fecha_maxima" value="{{hoy}}" required>
+                            </div>
+                            <div>
+                                <label for="hora_inicio">Hora Inicial:</label>
+                                <input type="time" id="hora_inicio" name="hora_inicio" value="08:00" >
+                            </div>
+                            <div>
+                                <label for="hora_final">Hora Final:</label>
+                                <input type="time" id="hora_final" name="hora_final" value="23:59">
+                            </div>
+                        </div>
+                        <div class="textarea-descripcion">
+                            <div class="input-field col s6">
+                                <input id="titulo_tarea" name="titulo_tarea" type="text" maxlength="45" required>
+                                    <label for="input_text">**Titulo</label>
+
+                            </div>
+                        </div>
+                        <label for="textarea">**Descripcion</label>
+                        <div class="textarea-descripcion">
+                            <textarea id="descripcion" name="descripcion" placeholder="**Descripcion" required></textarea>
+                        </div>
+                        <label for="textarea">**Campos Obligatorios</label>
+                        </div>
+
+                        <div class="navbtn">
+                            <a class="btn-floating btn-large waves-effect waves-light color-back"><i class="material-icons">+</i></a>
+                            <div class="opciones">
+                                <a class="waves-effect waves-light btn-large color-back" href="/dashBoard/{{usuario.usuarioCon}}">Regresar</a>
+                                <a class="waves-effect waves-light btn-large color-back"><input type="submit" value="Guardar"></input></a>
+                                <row>
+                                    <br /><label for="textarea">Comentarios</label><br />
+                                    <textarea class="textarea-comentarios" id="comentarios" name="comentarios" placeholder="Comentarios"></textarea>
+                                </row>
+
+                            </div>
+
+
+                        </div>
+
+                </form>
+            </div>
+
+
+            <!-- Formulario Editar Tarea -->
+            {% elif accion =="editar" %}
+
+            <div class="contenedor">
+                <div class="caja-descripcion">
+                    <form class="col-s12" action="/task/{{task.id_tarea}}" method="POST">
+                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                            <row>
+                                <div class="text">
+                                    <p>Tarea <br /> </p>
+                                </div>
+                            </row>
+
+                            <!-- Mensajes de resultado -->
+                            {% with messages = get_flashed_messages() %}
+                            {% if messages %}
+
+                            {% if error %}
+                            <div class="collapse show" id="mensaje">
+                                <div class="card border-danger">
+                                    <div class="card-header bg-danger" style="--bs-bg-opacity: .2;">
+                                        <button type="button" class="btn-close" data-bs-toggle="collapse" data-bs-target="#mensaje" aria-expanded="false" aria-controls="mensaje"></button>
+                                        <b>Error</b>
+                                    </div>
+                                    <div class="card-body bg-danger" style="--bs-bg-opacity: .1;">
+                                        {% for message in messages %}
+                                        <h5 class="card-title">{{ message }}</h5>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            </div>
+                            {% else %}
+                            <div class="collapse show" id="mensaje">
+                                <div class="card border-success">
+
+                                    <div class="card-header bg-success" style="--bs-bg-opacity: .2;">
+                                        <button type="button" class="btn-close" data-bs-toggle="collapse" data-bs-target="#mensaje" aria-expanded="false" aria-controls="mensaje"></button>
+                                        <b>Guardado</b>
+                                    </div>
+                                    <div class="card-body bg-success" style="--bs-bg-opacity: .1;">
+                                        {% for message in messages %}
+                                        <h5 class="card-title">{{ message }}</h5>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            </div>
+                            {% endif %}
+                            {% endif %}
+                            {% endwith %}
+
+
+                            {% if (task.creada_por == current_user.usuario) or (current_user.esAdmin) %}
+                            <row>
+                                <div style="margin-top:2rem; margin: .4rem 0; width: 350px; display: flex; flex-direction: row;">
+                                    <div>
+                                        <label for="fecha_maxima">fecha:</label>
+                                        <input type="date" id="fecha_maxima" name="fecha_maxima" value={{task.fecha}} required>
+                                    </div>
+                                    <div>
+                                        <label for="hora_inicio">Hora Inicial:</label>
+                                        <input type="time" id="hora_inicio" name="hora_inicio" value="{{task.hora_inicio}}">
+
+                                    </div>
+                                    <div>
+                                        <label for="hora_final">Hora Final:</label>
+                                        <input type="time" id="hora_final" name="hora_final" value="{{task.hora_final}}">
+                                    </div>
+                                </div>
+                            </row>
+
+                            <div class="textarea-descripcion">
+                                <div class="input-field col s6">
+                                    <input id="titulo_tarea" name="titulo_tarea" type="text" maxlength="45" value="{{task.titulo_tarea}}" required>
+                                        <label for="input_text">Titulo</label>
+
+                                </div>
+                            </div>
+                            <div class="textarea-descripcion">
+                                <textarea id="descripcion" name="descripcion" placeholder="**Descripcion" required>{{task.descripcion}}</textarea>
+                            </div>
+
+                            {% else %}
+                            <row>
+                                <div style="margin-top:2rem; margin: .4rem 0; width: 350px; display: flex; flex-direction: row;">
+                                    <div>
+                                        <label for="fecha_maxima">**fecha:</label>
+                                        <input type="date" id="fecha_maxima" name="fecha_maxima" value={{task.fecha}} required disabled="disabled">
+                                    </div>
+                                    <div>
+                                        <label for="hora_inicio" >Hora Inicial:</label>
+                                        <input type="time" id="hora_inicio" name="hora_inicio" value="{{task.hora_inicio}}">
+
+                                    </div>
+                                    <div>
+                                        <label for="hora_final">Hora Final:</label>
+                                        <input type="time" id="hora_final" name="hora_final" value="{{task.hora_final}}">
+                                    </div>
+                                </div>
+                            </row>
+
+                            <div class="textarea-descripcion">
+                                <div class="input-field col s6">
+                                    <input id="titulo_tarea" name="titulo_tarea" type="text" maxlength="45" value="{{task.titulo_tarea}}" required disabled="disabled">
+                                        <label for="input_text">**Titulo</label>
+
+                                </div>
+                            </div>
+                            <label for="textarea">**</label>
+                            <div class="textarea-descripcion">
+                                <textarea id="descripcion" name="descripcion" disabled="disabled" placeholder="**Descripcion" required>{{task.descripcion}}</textarea>
+                                <br />
+                                <label style="color:black">Tarea creada por el administrador, contactele si desea modificar los campos marcados con **</label>
+                            </div>
+
+                            {% endif %}
+
+                            </div>
+
+                            <div class="navbtn">
+                                <a class="btn-floating btn-large waves-effect waves-light color-back"><i class="material-icons">+</i></a>
+                                <div class="opciones">
+                                    <a class="waves-effect waves-light btn-large color-back" href="/dashBoard/{{task.usuario}}">Regresar</a>
+                                    <a class="waves-effect waves-light btn-large color-back"><input type="submit" value="Guardar"></input></a>
+                                    <a class="waves-effect waves-light btn-large color-back"><input type="button" data-bs-toggle="modal" data-bs-target="#confrimaEliminar" value="Eliminar"></input></a>
+
+                                    <textarea class="textarea-comentarios" name="comentarios">{{task.comentarios}}</textarea>
+                                    <div class="datos1">
+                                        <p>
+                                            {% if task.estado == "Completa" %}
+                                            <label>
+                                                <input type="checkbox" value="Completa" id="estado" name="estado" checked />
+                                                <span style="display: flex; flex-direction: row;">
+                                                    Completa
+                                                    <input type="date" id="fecha_cierre" name="fecha_cierre" value={{task.fecha_cierre}} disabled="disabled" style="margin-top: -10px; margin-left: 8px; font-size: small; line-height: 24px;">
+                                                </span>
+                                                <input type="hidden" value="Pendiente" name="estado">
+                                            </label>
+                                            {% else %}
+                                            <label>
+                                                <input type="checkbox" value="Completa" id="estado" name="estado" />
+                                                <span>Completa</span>
+                                                <input type="hidden" value="Pendiente" name="estado">
+                                            </label>
+                                            {% endif %}
+                                        </p>
+                                        <div style="margin: .4rem 0; width: 350px;">
+                                            <label for="fecha_maxima">Creado por: {{task.creada_por}} el dia {{task.fecha_creacion}}</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                    </form>
+                </div>
+
+
+                <!-- Formulario Eliminar Tarea -->
+                {% elif accion =="eliminar" %}
+
+                <div class="contenedor">
+                    <div class="caja-descripcion">
+                        <form class="col-s12">
+                            <row>
+                                <div class="text">
+                                    <p>Eliminar Tarea </p>
+                                </div>
+                            </row>
+
+                            <!-- Mensajes de resultado -->
+                            {% with messages = get_flashed_messages() %}
+                            {% if messages %}
+
+                            {% if error %}
+                            <div class="collapse show" id="mensaje">
+                                <div class="card border-danger">
+                                    <div class="card-header bg-danger" style="--bs-bg-opacity: .2;">
+                                        <button type="button" class="btn-close" data-bs-toggle="collapse" data-bs-target="#mensaje" aria-expanded="false" aria-controls="mensaje"></button>
+                                        <b>Error</b>
+                                    </div>
+                                    <div class="card-body bg-danger" style="--bs-bg-opacity: .1;">
+                                        {% for message in messages %}
+                                        <h5 class="card-title">{{ message }}</h5>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            </div>
+                            {% else %}
+                            <div class="collapse show" id="mensaje">
+                                <div class="card border-success">
+
+                                    <div class="card-header bg-success" style="--bs-bg-opacity: .2;">
+                                        <button type="button" class="btn-close" data-bs-toggle="collapse" data-bs-target="#mensaje" aria-expanded="false" aria-controls="mensaje"></button>
+                                        <b>Tarea eliminada</b>
+                                    </div>
+                                    <div class="card-body bg-success" style="--bs-bg-opacity: .1;">
+                                        {% for message in messages %}
+                                        <h5 class="card-title">{{ message }}</h5>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            </div>
+                            {% endif %}
+                            {% endif %}
+                            {% endwith %}
+
+                            <row>
+                                <div style="margin-top:2rem; margin: .4rem 0; width: 350px; display: flex; flex-direction: row;">
+                                    <div>
+                                        <label for="fecha_maxima">**fecha:</label>
+                                        <input type="date" id="fecha_maxima" name="fecha_maxima" value={{task.fecha}} disabled="disabled">
+                                    </div>
+                                    <div>
+                                        <label for="hora_inicio">Hora Inicial:</label>
+                                        <input type="time" id="hora_inicio" name="hora_inicio" value="{{task.hora_inicio}}" disabled="disabled">
+
+                                    </div>
+                                    <div>
+                                        <label for="hora_final">Hora Final:</label>
+                                        <input type="time" id="hora_final" name="hora_final" value="{{task.hora_final}}" disabled="disabled">
+                                    </div>
+                                </div>
+                            </row>
+
+                            <div class="textarea-descripcion">
+                                <div class="input-field col s6">
+                                    <input id="titulo_tarea" name="titulo_tarea" type="text" maxlength="45" value="{{task.titulo_tarea}}" disabled="disabled">
+                                        <label for="input_text">**Titulo</label>
+
+                                </div>
+                            </div>
+                            <label for="textarea">**</label>
+                            <div class="textarea-descripcion">
+                                <textarea disabled id="descripcion" name="descripcion" disabled="disabled" placeholder="**Descripcion">{{task.descripcion}}</textarea>
+                            </div>
+
+                    </div>
+
+                    <div class="navbtn">
+                        <a class="btn-floating btn-large waves-effect waves-light color-back"><i class="material-icons">+</i></a>
+                        <div class="opciones">
+                            <a class="waves-effect waves-light btn-large color-back" href="/dashBoard">Regresar</a>
+
+                            <textarea disabled class="textarea-comentarios" name="comentarios">{{task.comentarios}}</textarea>
+                        </div>
+                    </div>
+                    </form>
+                </div>
+
+                {% endif %}
+
+                <!-- Modal Confirma eliminar -->
+                <div class="modal fade" id="confrimaEliminar" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" style="background: #D9D9D9; height: fit-content; width: stretch;">
+                    <div class="modal-dialog" >
+                        <div class="modal-content" style="background: #F0EBD8;">
+                            <div class="modal-header" style="background: #F0EBD8; ">
+                                <h5 class="modal-title" id="exampleModalLabel">ELIMINAR TAREA</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body" style="background: #F0EBD8;">
+                                Si elimina la tarea, no podrá recuperar los datos borrados.
+                            </div>
+                            <div class="modal-footer" style="background: #F0EBD8;">
+                                <button type="button" class="waves-effect waves-light btn-large color-back" data-bs-dismiss="modal">Cancelar</button>
+                                <form action="/deltask/{{task.id_tarea}}" method="POST">
+                                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                                        <a href="/deltask/{{task.id_tarea}}">
+                                            <button type="submit" class="waves-effect waves-light btn-large color-back">Eliminar</button>
+                                        </a>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+                </body>
+                </html>

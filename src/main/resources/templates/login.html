@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login AgendApp</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css'>
+    <link rel="stylesheet" href="/css/index.css" />
+</head>
+<body>
+    <!-- partial:index.partial.html -->
+    <div class="contenedor">
+        <div class="center">
+            <h2>Log-in</h2>
+            <div class="form-container sign-in-container">
+                <form th:action="@{/login}" th:object=="${usuario}" method="post">
+                    <div class="inputs">
+                        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                        <div class="input-field col s6">
+                            <input th:field="*{username}" name="username" type="text" placeholder="Usuario">
+                            <label for="first_name">Usuario</label>
+                        </div>
+                        <div class="input-field col s12">
+                            <input th:field="*{password}"  type="password"  placeholder="Contraseña" name="password">
+                            <label for="password">Contraseña</label>
+                        </div>
+                    </div>
+                    <button class="btn waves-effect waves-yellow" type="submit">Iniciar sesión</button>
+                    <h6>Olvide mi Contraseña</h6>
+                </form>
+            </div>
+        </div>
+        </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    
+</body>
+</html>

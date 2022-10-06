@@ -1,0 +1,175 @@
+body{
+            
+    font-family: 'Roboto Condensed';
+    font-style: normal;
+    background: #F5F5F5 ;   
+}
+/* ===== Scrollbar CSS ===== */
+    /* Firefox */
+    * {
+        scrollbar-width: auto;
+        scrollbar-color: #a7a7a7 #ffffff;
+    }
+
+    /* Chrome, Edge, and Safari */
+    *::-webkit-scrollbar {
+        width: 16px;
+    }
+
+    *::-webkit-scrollbar-track {
+        background: #ffffff;
+    }
+
+    *::-webkit-scrollbar-thumb {
+        background-color: #a7a7a7;
+        border-radius: 10px;
+        border: 3px solid #ffffff;
+    }
+
+.text p{
+    position: absolute;
+    margin: 0px;
+    padding: 0px;
+    z-index: 1;
+    font-size: 40px;
+}
+
+.contenedor{
+    position: fixed;
+    height: 100%;
+    width: 100%;
+    display: flex;
+
+}
+
+.caja-descripcion{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #D9D9D9;
+    width: 100%;
+    height: 100%;
+
+}
+
+
+
+.btn-floating{
+    float: left;
+    margin: 15px;
+}
+
+.btn-floating i{
+    color: black !important;
+}
+
+.color-back{
+    background-color: #D9D9D9 !important;
+    color: black !important;
+}
+
+
+
+
+.navbtn:hover .btn-floating + .opciones{
+    display: flex;
+    opacity: 1;
+    
+    animation-name: dis;
+    animation-duration: 1s;
+    flex-wrap: wrap
+}
+.opciones{
+    opacity: 0;
+    display: none;
+}   
+
+.textarea-comentarios{
+   margin-top: 30px;
+    height: 500px;
+    width: 320px;
+    background-color: #D9D9D9;
+
+}
+
+
+@keyframes dis {
+    from{display: none; opacity: 0;}
+    to{
+        display: flex;
+        opacity: 1;
+    }
+}
+
+.textarea-descripcion{
+    width: 500px;
+    height: 600px;
+    background-color:#a7a7a7;
+
+}
+.textarea-descripcion > div{
+    margin: 10px;
+    padding: 0px;
+}
+.hora{
+    float: right;
+    bottom: auto;
+
+
+}
+
+
+.opciones a{
+    
+
+    margin-right: 40px;
+    margin-top: 15px;
+    display: inline-block;
+    padding: 5px;
+    background-color: red;
+
+    
+}
+
+textarea {
+    width: 800px;
+    height: 600px;
+    padding: 12px 20px;
+    box-sizing: border-box;
+    border: 2px solid #ccc;
+    border-radius: 4px;
+    background-color: #F4F1F1;
+    font-size: 16px;
+    resize: none;
+}
+
+@media (max-width: 800px) {
+    textarea {
+        width: 300px;
+        height: 200px;
+        padding: 12px 20px;
+        box-sizing: border-box;
+        border: 2px solid #ccc;
+        border-radius: 4px;
+        background-color: #F4F1F1;
+        font-size: 16px;
+        resize: none;
+    }
+    .navbtn:hover{
+    margin-top: 55px;
+    position:absolute;
+}
+    .textarea-comentarios{
+    
+        margin-top: 30px;
+        height: 500px;
+        width: 320px;
+        background-color: #F4F1F1;
+
+    }
+
+    .navbtn{
+    display: flex;
+    flex-direction: row;
+}
+}

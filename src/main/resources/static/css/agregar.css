@@ -1,0 +1,234 @@
+body{
+            
+    font-family: 'Roboto Condensed';
+    font-style: normal;
+    background: #F5F5F5 ;   
+}
+/* ===== Scrollbar CSS ===== */
+    /* Firefox */
+    * {
+        scrollbar-width: auto;
+        scrollbar-color: #a7a7a7 #ffffff;
+    }
+
+    /* Chrome, Edge, and Safari */
+    *::-webkit-scrollbar {
+        width: 16px;
+    }
+
+    *::-webkit-scrollbar-track {
+        background: #ffffff;
+    }
+
+    *::-webkit-scrollbar-thumb {
+        background-color: #a7a7a7;
+        border-radius: 10px;
+        border: 3px solid #ffffff;
+    }
+
+.text p{
+    position: initial;
+    margin: 0px;
+    padding: 2px;
+    z-index: 1;
+    font-size: 40px;
+}
+
+
+.nueva-tarea{
+    position: initial;
+    background: white;
+    
+}
+
+
+.contenedor{
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    display: flex;
+
+}
+
+.caja-descripcion {
+    text-align: center;
+    position: relative;
+    align-items: normal;
+    justify-content: center;
+    background-color: #D9D9D9;
+    width: 100%;
+    min-height: 100%;
+    height: fit-content;
+}
+
+.mensaje-exito {
+    border-radius: 8px;
+    box-shadow: 2px 2px 4px 1px #082E04 inset;
+    font-size: 18px;
+    text-align: center;
+}
+
+
+.mensaje-error {
+    border-radius: 8px;
+    box-shadow: 2px 2px 4px 1px #E16666 inset;
+    font-size: 18px;
+    text-align: center;
+}
+
+.mensaje-alerta {
+    border-radius: 8px;
+    box-shadow: 1px 1px 4px 1px #AEA645 inset;
+    font-size: 18px;
+    text-align: center;
+    text-indent: 3px;
+}
+
+
+.btn-floating {
+    float: left;
+    margin: 15px;
+}
+
+.btn-floating i{
+    color: black !important;
+}
+
+.color-back{
+    background-color: #D9D9D9 !important;
+    color: black !important;
+}
+
+
+
+
+.navbtn:hover .btn-floating + .opciones{
+    display: flex;
+    opacity: 1;
+    animation-name: dis;
+    animation-duration: 1s;
+    flex-wrap: wrap
+}
+.opciones{
+    opacity: 0;
+    display: none;
+}   
+
+.textarea-comentarios{
+    margin-top: 30px;
+    height: 500px;
+    width: 320px;
+    background-color: #D9D9D9;
+}
+
+
+@keyframes dis {
+    from{display: none; opacity: 0;}
+    to{
+        display: flex;
+        opacity: 1;
+    }
+}
+
+
+.opciones a{
+    
+
+    margin-right: 40px;
+    margin-top: 15px;
+    display: inline-block;
+    padding: 5px;
+    background-color: red;
+
+    
+}
+/* label color */
+
+.input-field label {
+    color: #000 !important;
+}
+/* label focus color */
+.input-field input[type=text]:focus + label {
+    color: rgb(0, 0, 0) !important;
+}
+.input-field input[type=password]:focus + label {
+    color: #000 !important;
+}
+/* label underline focus color */
+.input-field input[type=text]:focus {
+    border-bottom: 1px solid rgb(146, 146, 146) !important;
+    box-shadow: 0 1px 0 0 #000 !important;
+}
+.input-field input[type=password]:focus {
+    border-bottom: 1px solid rgb(146, 146, 146) !important;
+    box-shadow: 0 1px 0 0 #000 !important;
+}
+/* valid color */
+.input-field input[type=text].valid {
+    border-bottom: 1px solid #000 !important;
+    box-shadow: 0 1px 0 0 #000 !important;
+}
+
+.input-field input[type=password].valid {
+    border-bottom: 1px solid #000 !important;
+    box-shadow: 0 1px 0 0 #000 !important;
+}
+/* invalid color */
+.input-field input[type=text].invalid {
+    border-bottom: 1px solid #000 !important;
+    box-shadow: 0 1px 0 0 #000 !important;
+}
+.input-field input[type=password].invalid {
+    border-bottom: 1px solid #000 !important;
+    box-shadow: 0 1px 0 0 #000 !important;
+}
+/* icon prefix focus color */
+.input-field .prefix.active {
+    color: #000 !important;
+}
+
+textarea {
+    width: 800px;
+    height: 300px;
+    padding: 12px 20px;
+    box-sizing: border-box;
+    border: 2px solid #ccc;
+    border-radius: 4px;
+    background-color: #F4F1F1;
+    font-size: 16px;
+    resize: vertical;
+}
+.textarea-descripcion ::placeholder {
+    color: #909297;
+}
+@media (max-width: 800px) {
+    textarea {
+        width: 300px;
+        height: 200px;
+        padding: 12px 20px;
+        box-sizing: border-box;
+        border: 2px solid #ccc;
+        border-radius: 4px;
+        background-color: #F4F1F1;
+        font-size: 16px;
+        resize: none;
+    }
+    .navbtn:hover{
+    margin-top: 55px;
+    position:absolute;
+    background-color: #F5F5F5;
+    }
+    .textarea-comentarios{
+    
+        margin-top: 30px;
+        height: 500px;
+        width: 320px;
+        background-color: #F4F1F1;
+
+    }
+
+    .navbtn{
+    display: flex;
+    flex-direction: row;
+    }
+}

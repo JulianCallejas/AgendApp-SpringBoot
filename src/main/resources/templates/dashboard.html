@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Agendapp</title>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" />
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
+        <link rel="stylesheet" href="/css/escritorio.css" />
+    </head>
+    <body>
+        <div class="text">
+            <p>Bienvenido, <span th:text="${usuarioLogueado.getEmpleado().getNombreCompleto()}">NombreUsuario</span></p>
+            <div class="navbtn">
+                <a class="btn-floating btn-large waves-effect waves-light color-back"><i class="material-icons">+</i></a>
+                <div class="opciones">
+                    <a class="waves-effect waves-light btn-large color-back" href="/inicio">Inicio</a>
+                    <a class="waves-effect waves-light btn-large color-back" href="/new-task">Agregar</a>
+                    <a class="waves-effect waves-light btn-large color-back" th:href="'/user/'+${usuarioLogueado.getUsuario()}">usuario</a>
+                    <form th:action="@{/logout}" method="post">
+                        <button class="waves-effect waves-light btn-large color-back" type="submit">Cerrar</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <h1 th:text="${usuarioLogueado.getUsuario() == usuarioConsulta.getUsuario()}? 
+            'Tu Agendapp' : 
+            'Agendapp de ' + ${usuarioConsulta.getEmpleado().getNombre()} + ' (' + ${usuarioConsulta.getUsuario()} + ')'"
+            style="text-align: center;">Tu Agendapp</h1>
+
+        <div class="contenedor">
+            <div class="filter"></div>
+            <th:block th:each="i: ${#numbers.sequence(0,totalTareas)}">
+                <th:block th:switch="${agenda.getTarea().get(i).getEstado()}">
+                    <th:block th:case="'Pendiente'">
+                        <div class="caja" th:id="${i}">
+                            <a th:href="@{/task/{id}(id=${agenda.getTarea().get(i).id_tarea})}">
+                                <h3 th:text="${agenda.getTarea().get(i).getTitulo_tarea()}">{{  tareas[nu].10 }}</h3>
+                                <p th:text="${agenda.getTarea().get(i).getDescripcion()}">{{ tareas[nu].11 }}</p>
+                                <div th:text="${agenda.getTarea().get(i).getFecha()} + ' ' + ${agenda.getTarea().get(i).getHora_inicio()} " class="hora">{{ tareas[nu].7 }} {{tareas[nu].8}}</div>
+                            </a>
+                        </div>
+                    </th:block>
+
+                    <th:block th:case="'Completa'">
+                        <div class="ter caja" th:id="${i}">
+                            <a th:href="@{/task/{id}(id=${agenda.getTarea().get(i).id_tarea})}">
+                                <h3 th:text="${agenda.getTarea().get(i).getTitulo_tarea()}">{{  tareas[nu].10 }}</h3>
+                                <p th:text="${agenda.getTarea().get(i).getDescripcion()}">{{ tareas[nu].11 }}</p>
+                                <div th:text="${agenda.getTarea().get(i).getFecha()} + ' ' + ${agenda.getTarea().get(i).getHora_inicio()} " class="hora">{{ tareas[nu].7 }} {{tareas[nu].8}}</div>
+                            </a>
+                        </div>
+                    </th:block>
+
+
+                </th:block>
+
+            </th:block>
+            <div class="ver-mas">
+                <a th:href="'/dashBoard/'+${pagina + 1}+'#'+${pagina * 3}">
+                    <span class="material-symbols-outlined">
+                        expand_more
+                    </span>
+                </a>
+                <a href="#">
+                    <span class="material-symbols-outlined">
+                        expand_less
+                    </span>
+                </a>
+            </div>
+        </div>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    </body>
+</html>

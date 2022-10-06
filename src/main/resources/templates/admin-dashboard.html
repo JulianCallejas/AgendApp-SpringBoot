@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" />
+        <link rel="stylesheet" href="/css/escritorio.css" />
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
+        <style>
+            .input-admin{
+                display: flex;
+                flex-direction: row-reverse;
+                align-content: center;
+                justify-content: space-around;
+            }
+            a{
+                text-decoration: none;
+                color: black;
+            }
+        </style>
+        <title>Admin Agendapp</title>
+
+    </head>
+
+    <body>
+        <div class="text" id="inicio">
+            <p>Bienvenido, <span th:text="${usuarioLogueado.getEmpleado().getNombreCompleto()}">NombreUsuario</span></p>
+
+            <div class="navbtn">
+                <a class="btn-floating btn-large waves-effect waves-light color-back"><i class="material-icons">+</i></a>
+                <div class="opciones">
+                    <a class="waves-effect waves-light btn-large color-back" href="/inicio">Inicio</a>
+                    <a class="waves-effect waves-light btn-large color-back" href="/new-user">Agregar</a>
+                    <a class="waves-effect waves-light btn-large color-back" th:href="'/user/'+${usuarioLogueado.getUsuario()}">usuario</a>
+                    <form th:action="@{/logout}" method="post">
+                        <button class="waves-effect waves-light btn-large color-back" type="submit">Cerrar</button>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+        <div class="input-admin">
+            <div>
+                <form th:action="@{/admin/dashBoard}" method="post" >
+                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                    <input style="width: 180px; align-items: center;"
+                           id="searh_user" type="text" class="validate"
+                           placeholder="Busar Usuario" th:name="filtro" th:field="${filtro}" />
+                    <button class="btn-floating btn-large waves-effect waves-light color-back" type="submit">
+                        <i class="material-icons"><span class="material-symbols-outlined">search</span></i>
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        <div class="contenedor">
+            <div class="filter"></div>
+
+            <th:block th:switch="${filtro}">
+
+                <th:block th:case="''">
+
+                    <th:block th:each="i: ${#numbers.sequence(0,totalUsuarios)}">
+
+                        <div class="caja" th:id="${i}">
+                            <h3 th:text="${usuarios.get(i).getUsuario()}">{{  usuarios[nu].1 }}</h3>
+                            <div>
+                                <ul th:object=="${usuarios.get(i).getEmpleado()}">
+                                    <li th:text="*{getNombre()}">Nombre: {{  usuarios[nu].3 }}</li>
+                                    <li th:text="*{getApellido()}">Apellido: {{  usuarios[nu].4 }}</li>
+                                    <li th:text="${usuarios.get(i).getEmail()}">Email: {{  usuarios[nu].6 }}</li>
+                                    <li th:text="*{getCargo()}">Cargo: {{  usuarios[nu].5 }}</li>
+                                </ul>
+
+                                <a >
+                                    <a class="waves-effect waves-light btn-large color-back" th:href="@{/dashBoard/usuario-{usuario}(usuario=${usuarios.get(i).getUsuario()})}">Ver agenda</a>
+                                    <a class="waves-effect waves-light btn-large color-back" th:href="'/user/'+${usuarios.get(i).getUsuario()}">Editar</a>
+                            </div>
+                        </div>
+                    </th:block>
+                    <div class="ver-mas">
+                        <a th:href="'/admin/dashboard/'+${pagina + 1}+'#'+${pagina * 3}">
+                            <span class="material-symbols-outlined">
+                                expand_more
+                            </span>
+                        </a>
+                        <a href="#">
+                            <span class="material-symbols-outlined">
+                                expand_less
+                            </span>
+                        </a>
+                    </div>
+                </th:block>
+
+                <th:block th:case="'*'">
+                    <th:block th:each="i: ${#numbers.sequence(0,totalUsuarios)}">
+                        <div class="caja" th:id="${i}">
+                            <h3 th:text="${usuarios.get(i).getUsuario()}">{{  usuarios[nu].1 }}</h3>
+                            <div>
+                                <ul th:object=="${usuarios.get(i).getEmpleado()}">
+                                    <li th:text="*{getNombre()}">Nombre: {{  usuarios[nu].3 }}</li>
+                                    <li th:text="*{getApellido()}">Apellido: {{  usuarios[nu].4 }}</li>
+                                    <li th:text="${usuarios.get(i).getEmail()}">Email: {{  usuarios[nu].6 }}</li>
+                                    <li th:text="*{getCargo()}">Cargo: {{  usuarios[nu].5 }}</li>
+                                </ul>
+
+                                <a >
+                                    <a class="waves-effect waves-light btn-large color-back" th:href="@{/dashBoard/usuario-{usuario}(usuario=${usuarios.get(i).getUsuario()})}">Ver agenda</a>
+                                    <a class="waves-effect waves-light btn-large color-back" th:href="'/user/'+${usuarios.get(i).getUsuario()}">Editar</a>
+                            </div>
+                        </div>
+                        </th:block>
+                        <div class="ver-mas">
+                            <a href="#">
+                                <span class="material-symbols-outlined">
+                                    expand_less
+                                </span>
+                            </a>
+                        </div>
+
+                    </th:block>
+
+                </th:block>
+        </div>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    </body>
+</html>
