@@ -201,6 +201,12 @@ textarea {
 .textarea-descripcion ::placeholder {
     color: #909297;
 }
+
+.textarea-usuario ::placeholder {
+    color: #909297;
+    max-width: 50%;
+}
+
 @media (max-width: 800px) {
     textarea {
         width: 300px;

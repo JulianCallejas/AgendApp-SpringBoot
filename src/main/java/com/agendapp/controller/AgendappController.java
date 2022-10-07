@@ -2,6 +2,7 @@ package com.agendapp.controller;
 
 import com.agendapp.encriptador.Encriptador;
 import com.agendapp.entities.Agenda;
+import com.agendapp.entities.Empleado;
 import com.agendapp.entities.Tarea;
 import com.agendapp.entities.Usuario;
 import com.agendapp.entities.Usulog;
@@ -177,7 +178,7 @@ public class AgendappController {
                 mensaje = "La hora final debe ser mayor que la hora inicial";
             }
 
-            if (resultado == "exito") {
+            if (resultado.equals("exito")) {
                 tareaService.guardarTarea(tarea);
             }
 
@@ -239,7 +240,7 @@ public class AgendappController {
                 resultado = "fallo";
                 mensaje = "La hora final debe ser mayor que la hora inicial";
             }
-            if (resultado == "exito") {
+            if (resultado.equals("exito")) {
                 tareaService.guardarTarea(tareaExiste);
             }
 
@@ -265,7 +266,7 @@ public class AgendappController {
             mensaje = "No tiene permisos para eliminar la tarea, contacte al Administrador";
         }
 
-        if (resultado == "exito") {
+        if (resultado.equals("exito")) {
 
             try {
                 tareaService.eliminarTarea(tarea);
@@ -363,8 +364,64 @@ public class AgendappController {
     }
 
     @GetMapping("/user/{usuario}")
-    public String editarUsuario(@PathVariable String usuario, Model modelo) {
+    public String getEditarUsuario(@PathVariable String usuario, Model modelo) {
+
         modelo.addAttribute("usuario", usuarioService.buscarUsuarioPorUsuario(usuario));
+        modelo.addAttribute("usuarioLogueado", this.usuarioLogueado);
+        modelo.addAttribute("usuarioConsulta", this.usuarioConsulta);
+        modelo.addAttribute("mensaje", null);
+
+        return "ususario";
+    }
+
+    @PostMapping("/user/{usuario}")
+    public String postEditarUsuario(@PathVariable String usuario,
+            @RequestParam(value = "fcontrasena", defaultValue = "") String fcontrasena,
+            @RequestParam(value = "fcontrasena2", defaultValue = "") String fcontrasena2,
+            @RequestParam(value = "femail", defaultValue = "") String femail,
+            @RequestParam(value = "fnumeroid", defaultValue = "") String fnumeroid,
+            @RequestParam(value = "fnombre", defaultValue = "") String fnombre,
+            @RequestParam(value = "fapellido", defaultValue = "") String fapellido,
+            @RequestParam(value = "fcargo", defaultValue = "") String fcargo,
+            Model modelo) {
+
+        String resultado = "exito";
+        String mensaje = "Usuario guardado correctamente";
+        Usuario usuarioExiste = usuarioService.buscarUsuarioPorUsuario(usuario);
+        Empleado empleado = empleadoService.buscarEmpleadoPorUsuario(usuario);
+
+        try {
+            if (fcontrasena.length() > 0) {
+                if (fcontrasena.equals(fcontrasena2)) {
+                    usuarioExiste.setContrasena(fcontrasena);
+                } else {
+                    resultado = "fallo";
+                    mensaje = "La contraseña no coincide";
+                }
+            }
+
+            usuarioExiste.setEmail(femail);
+            empleado.setId_empleado(fnumeroid);
+            empleado.setNombre(fnombre);
+            empleado.setApellido(fapellido);
+            empleado.setCargo(fcargo);
+
+            if (resultado.equals("exito")) {
+                usuarioService.guardarUsuario(usuarioExiste);
+                empleadoService.guardarEmpleado(empleado);
+            }
+
+        } catch (Exception e) {
+            resultado = "fallo";
+            mensaje = e.toString();
+        }
+
+        modelo.addAttribute("usuario", usuarioExiste);
+        modelo.addAttribute("usuarioLogueado", this.usuarioLogueado);
+        modelo.addAttribute("usuarioConsulta", this.usuarioConsulta);
+        modelo.addAttribute("resultado", resultado);
+        modelo.addAttribute("mensaje", mensaje);
+
         return "ususario";
     }
 
