@@ -38,15 +38,16 @@
                     </form>
                 </div>
             </div>
-
+            
+      
+            
         </div>
         <div class="input-admin">
             <div>
-                <form th:action="@{/admin/dashBoard}" method="post" >
+                <form th:action="@{/admin/dashboard}" method="post">
                     <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-                    <input style="width: 180px; align-items: center;"
-                           id="searh_user" type="text" class="validate"
-                           placeholder="Busar Usuario" th:name="filtro" th:field="${filtro}" />
+                    <input th:value="${filtro}" style="width: 180px; align-items: center;"
+                           th:name="filtro" type="text" placeholder="Busar Usuario"/>
                     <button class="btn-floating btn-large waves-effect waves-light color-back" type="submit">
                         <i class="material-icons"><span class="material-symbols-outlined">search</span></i>
                     </button>
@@ -93,7 +94,7 @@
                     </div>
                 </th:block>
 
-                <th:block th:case="'*'">
+                <th:block th:case="*">
                     <th:block th:each="i: ${#numbers.sequence(0,totalUsuarios)}">
                         <div class="caja" th:id="${i}">
                             <h3 th:text="${usuarios.get(i).getUsuario()}">{{  usuarios[nu].1 }}</h3>

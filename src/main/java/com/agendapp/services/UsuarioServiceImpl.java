@@ -39,4 +39,9 @@ public class UsuarioServiceImpl implements UsuarioService {
         return usuarioRepo.findByUsuarioAndContrasena(usuario, contrasena);
     }
 
+    @Override
+    public List<Usuario> filtrarUsuarios(String filtro) {
+        return usuarioRepo.findFilter(filtro);
+    }
+
 }

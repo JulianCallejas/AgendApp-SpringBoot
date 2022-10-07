@@ -260,11 +260,19 @@ public class AgendappController {
         Tarea tarea = tareaService.buscarTareaPorId(taskId).get();
         String resultado = "exito";
         String mensaje = "Tarea eliminada correctamente";
-        try {
-            tareaService.eliminarTarea(tarea);
-        } catch (Exception e) {
+        if (!tarea.getUsuario().equals(tarea.getCreadaPor()) & !usuarioLogueado.isAdministrador()) {
             resultado = "fallo";
-            mensaje = e.toString();
+            mensaje = "No tiene permisos para eliminar la tarea, contacte al Administrador";
+        }
+
+        if (resultado == "exito") {
+
+            try {
+                tareaService.eliminarTarea(tarea);
+            } catch (Exception e) {
+                resultado = "fallo";
+                mensaje = e.toString();
+            }
         }
 
         modelo.addAttribute("tarea", tarea);
@@ -296,23 +304,20 @@ public class AgendappController {
         modelo.addAttribute("totalUsuarios", totalUsuarios);
         return "admin-dashboard";
     }
-    
-    
-    
+
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    @PostMapping("/admin/dashBoard")
-    public String postAdminDashBoard(@ModelAttribute("filtro") String filtro, Model modelo) {
-        
-        if (filtro==null){
+    @PostMapping("/admin/dashboard")
+    public String postAdminDashBoard(@RequestParam(value = "filtro", defaultValue = "") String filtro, Model modelo) {
+
+        if (filtro.length() == 0) {
             return "redirect:/admin/dashBoard";
         }
 
-        List<Usuario> usuarios = usuarioService.listarUsuarios();
+        List<Usuario> usuarios = usuarioService.filtrarUsuarios(filtro);
         long pagina = 1;
-        long totalUsuarios = usuarios.size()-1;
+        long totalUsuarios = usuarios.size() - 1;
+
 //        totalUsuarios = totalUsuarios > ((pagina * 3) - 1) ? ((pagina * 3) - 1) : totalUsuarios - 1;
-
-
         modelo.addAttribute("usuarioLogueado", this.usuarioLogueado);
         modelo.addAttribute("usuarioConsulta", this.usuarioConsulta);
         modelo.addAttribute("usuarios", usuarios);
@@ -322,13 +327,6 @@ public class AgendappController {
         modelo.addAttribute("totalUsuarios", totalUsuarios);
         return "admin-dashboard";
     }
-    
-    
-    
-    
-    
-    
-    
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping("/admin/dashboard/{pagina}")

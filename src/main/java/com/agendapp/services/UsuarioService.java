@@ -17,4 +17,6 @@ public interface UsuarioService {
     public Usuario buscarUsuarioPorUsuario(String usuario);
     
     public Usuario buscarUsuarioPorUsuarioContrasena(String usuario, String contrasena);
+    
+    public List<Usuario> filtrarUsuarios(String filtro);
 }

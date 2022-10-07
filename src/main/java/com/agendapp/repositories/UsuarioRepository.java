@@ -13,8 +13,10 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface UsuarioRepository extends JpaRepository<Usuario,Long>{
     
-    @Query(value = "SELECT * FROM usuarios u WHERE CONCAT(u.Usuario,  u.Email) LIKE %?1%", nativeQuery = true)
-    public List<Usuario> findFilter(String palabraClave);
+   
+    
+    @Query(value="CALL SP_SelectUsuariosWord (?)", nativeQuery = true)
+    public List<Usuario> findFilter(String filtro);
     
     public Usuario findByUsuario(String usuario);
     
