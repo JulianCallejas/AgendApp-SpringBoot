@@ -1,7 +1,7 @@
 
 package com.agendapp.encriptador;
 
-import com.agendapp.encriptador.Encriptador;
+import com.agendapp.encriptador.EncriptadorAnterior;
 import java.io.UnsupportedEncodingException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
@@ -20,7 +20,7 @@ public class EncriptadorTest {
             final String claveEncriptacion = "agendappEncriptar";            
             String datosOriginales = "1234";            
             
-            Encriptador encriptador = new Encriptador();
+            EncriptadorAnterior encriptador = new EncriptadorAnterior();
             
             String encriptado = encriptador.encriptar(datosOriginales, claveEncriptacion);
             String desencriptado = encriptador.desencriptar(encriptado, claveEncriptacion);

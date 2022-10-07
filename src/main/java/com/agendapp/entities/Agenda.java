@@ -39,6 +39,12 @@ public class Agenda {
         this.idAgenda = idAgenda;
     }
 
+    public Agenda(String usuario) {
+        this.usuario = usuario;
+    }
+
+    
+    
     public long getIdAgenda() {
         return idAgenda;
     }

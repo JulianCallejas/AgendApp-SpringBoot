@@ -39,6 +39,16 @@ public class Empleado {
         this.cargo = cargo;
     }
 
+    public Empleado(String id_empleado, String usuario, String nombre, String apellido, String cargo) {
+        this.id_empleado = id_empleado;
+        this.usuario = usuario;
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.cargo = cargo;
+    }
+    
+    
+
     public Empleado(String usuario) {
         this.usuario = usuario;
     }

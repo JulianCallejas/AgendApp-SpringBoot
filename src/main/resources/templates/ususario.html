@@ -18,83 +18,83 @@
             <div class="caja-descripcion">
                 <form class="col-s12" th:action="@{/user/{usuario}(usuario=${usuario.getUsuario()})}" method="post">
                     <th:block th:object=="${usuario}">
-                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-                    <div class="textarea-descripcion">
-                        <h4 style="align-content:center;">Edita usuario</h4>
+                        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                        <div class="textarea-descripcion">
+                            <h4 style="align-content:center;">Edita usuario</h4>
 
-                        <div th:if="${mensaje} != null">
-                            <!-- Mensajes de resultado -->
-                            <div th:if="${resultado} != 'exito'">
-                                <div class="collapse show" id="mensaje">
-                                    <div style="max-width: 500px;  margin-left: 32%; text-align: left;">
-                                        <div class="card border-danger">
-                                            <div class="card-header bg-danger" style="--bs-bg-opacity: .2;">
-                                                <button type="button" class="btn-close" data-bs-toggle="collapse" data-bs-target="#mensaje" aria-expanded="false" aria-controls="mensaje"></button>
-                                                <b>Error</b>
-                                            </div>
-                                            <div class="card-body bg-danger" style="--bs-bg-opacity: .1;">
-                                                <h5 class="card-title" th:text="${mensaje}">{{ message }}</h5>
+                            <div th:if="${mensaje} != null">
+                                <!-- Mensajes de resultado -->
+                                <div th:if="${resultado} != 'exito'">
+                                    <div class="collapse show" id="mensaje">
+                                        <div style="max-width: 500px;  margin-left: 32%; text-align: left;">
+                                            <div class="card border-danger">
+                                                <div class="card-header bg-danger" style="--bs-bg-opacity: .2;">
+                                                    <button type="button" class="btn-close" data-bs-toggle="collapse" data-bs-target="#mensaje" aria-expanded="false" aria-controls="mensaje"></button>
+                                                    <b>Error</b>
+                                                </div>
+                                                <div class="card-body bg-danger" style="--bs-bg-opacity: .1;">
+                                                    <h5 class="card-title" th:text="${mensaje}">{{ message }}</h5>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
 
-                            <div th:if="${resultado} == 'exito'">
-                                <div class="collapse show " id="mensaje">
-                                    <div style="max-width: 500px;  margin-left: 32%; text-align: left;">
-                                        <div class="card border-success" >
-                                            <div class="card-header bg-success" style="--bs-bg-opacity: .2;">
-                                                <button type="button" class="btn-close" data-bs-toggle="collapse" data-bs-target="#mensaje" aria-expanded="false" aria-controls="mensaje"></button>
-                                                <b>Guardado</b>
-                                            </div>
-                                            <div class="card-body bg-success" style="--bs-bg-opacity: .1;">
-                                                <h5 class="card-title" th:text="${mensaje}">{{ message }}</h5>
+                                <div th:if="${resultado} == 'exito'">
+                                    <div class="collapse show " id="mensaje">
+                                        <div style="max-width: 500px;  margin-left: 32%; text-align: left;">
+                                            <div class="card border-success" >
+                                                <div class="card-header bg-success" style="--bs-bg-opacity: .2;">
+                                                    <button type="button" class="btn-close" data-bs-toggle="collapse" data-bs-target="#mensaje" aria-expanded="false" aria-controls="mensaje"></button>
+                                                    <b>Guardado</b>
+                                                </div>
+                                                <div class="card-body bg-success" style="--bs-bg-opacity: .1;">
+                                                    <h5 class="card-title" th:text="${mensaje}">{{ message }}</h5>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
+                                <!-- FIN Mensajes de resultado -->
                             </div>
-                            <!-- FIN Mensajes de resultado -->
                         </div>
-                    </div>
-                    <div class="textarea-descripcion">
-                        <div class="textarea-usuario">
+                        <div class="textarea-descripcion">
+                            <div class="textarea-usuario">
 
-                            <ul>
-                                <li>
-                                    <input th:value="*{usuario}" id="fusuario" th:name="fusuario" type="text" placeholder="**Usuario" value="{{usuario.usuario}}" disabled="disabled" style="color: #000 !important; font-weight: bold; max-width: 25%">
-                                </li>
-                                <li>
-                                    <input  id="fcontrasena" th:name="fcontrasena" type="password" placeholder="Contraseña" minlength="4" maxlength="50" style="max-width: 25%">
-                                </li>
-                                <li>
-                                    <input id="fcontrasena2" th:name=="fcontrasena2" type="password" placeholder="Repita Contraseña" minlength="4" maxlength="50" style="max-width: 25%">
-                                </li>
-                                <li>
-                                    <input th:value="*{email}" id="femail" th:name="femail" type="email" class="validate" placeholder="**Email" value="{{usuario.email}}" maxlength="45" required style="max-width: 25%">
-                                </li>
-                                <li>
-                                    <input th:value="*{empleado.id_empleado}" id="fnumeroid" th:name="fnumeroid" type="text" placeholder="**Numero de identificacion" value="{{usuario.id_persona}}" maxlength="12" required style="max-width: 25%">
-                                </li>
-                                <li>
-                                    <input th:value="*{empleado.nombre}" id="fnombre" th:name="fnombre" type="text" placeholder="Nombres" value="{{usuario.nombres}}" maxlength="45" style="max-width: 25%">
-                                </li>
-                                <li>
-                                    <input th:value="*{empleado.apellido}" id="fapellido" th:name="fapellido" type="text" placeholder="Apellidos" value="{{usuario.apellidos}}" maxlength="45" style="max-width: 25%">
-                                </li>
-                                <li>
-                                    <input th:value="*{empleado.cargo}" id="fcargo" th:name="fcargo" type="text" placeholder="Cargo" value="{{usuario.cargo}}" maxlength="45" style="max-width: 25%">
-                                </li>
-                            </ul>
-                            <p>**Campos obligatorios</p>
+                                <ul>
+                                    <li>
+                                        <input th:value="*{usuario}" id="fusuario" th:name="fusuario" type="text" placeholder="**Usuario" disabled="disabled" style="color: #000 !important; font-weight: bold; max-width: 25%">
+                                    </li>
+                                    <li>
+                                        <input  id="fcontrasena" th:name="fcontrasena" type="password" placeholder="Contraseña" minlength="4" maxlength="50" style="max-width: 25%">
+                                    </li>
+                                    <li>
+                                        <input id="fcontrasena2" th:name="fcontrasena2" type="password" placeholder="Repita Contraseña" minlength="4" maxlength="50" style="max-width: 25%">
+                                    </li>
+                                    <li>
+                                        <input th:value="*{email}" id="femail" th:name="femail" type="email" class="validate" placeholder="**Email" maxlength="45" required style="max-width: 25%">
+                                    </li>
+                                    <li>
+                                        <input th:value="*{empleado.id_empleado}" id="fnumeroid" th:name="fnumeroid" type="text" placeholder="**Numero de identificacion" maxlength="12" required style="max-width: 25%">
+                                    </li>
+                                    <li>
+                                        <input th:value="*{empleado.nombre}" id="fnombre" th:name="fnombre" type="text" placeholder="Nombres" maxlength="45" style="max-width: 25%">
+                                    </li>
+                                    <li>
+                                        <input th:value="*{empleado.apellido}" id="fapellido" th:name="fapellido" type="text" placeholder="Apellidos" maxlength="45" style="max-width: 25%">
+                                    </li>
+                                    <li>
+                                        <input th:value="*{empleado.cargo}" id="fcargo" th:name="fcargo" type="text" placeholder="Cargo" maxlength="45" style="max-width: 25%">
+                                    </li>
+                                </ul>
+                                <p>**Campos obligatorios</p>
+                            </div>
                         </div>
-                    </div>
-                    <button class="waves-effect waves-light btn-large color-back" type="submit">Guardar</button>
-                    <th:block th:if="${usuarioLogueado.isAdministrador()} != null">
-                        <button type="button" class="waves-effect waves-light btn-large color-back" data-bs-toggle="modal" data-bs-target="#confrimaEliminar">Eliminar</button>
-                    </th:block>
-                    <a class="waves-effect waves-light btn-large color-back" href="/inicio">Regresar</a>
+                        <button class="waves-effect waves-light btn-large color-back" type="submit">Guardar</button>
+                        <th:block th:if="${usuarioLogueado.isAdministrador()}">
+                            <button type="button" class="waves-effect waves-light btn-large color-back" data-bs-toggle="modal" data-bs-target="#confrimaEliminar">Eliminar</button>
+                        </th:block>
+                        <a class="waves-effect waves-light btn-large color-back" href="/inicio">Regresar</a>
                     </th:block>
                 </form>
             </div>
@@ -114,11 +114,9 @@
                         </div>
                         <div class="modal-footer" style="background: #F0EBD8;">
                             <button type="button" class="waves-effect waves-light btn-large color-back" data-bs-dismiss="modal">Cancelar</button>
-                            <form action="/elimina-usuario/{{usuario.usuario}}" method="POST">
+                            <form th:action="@{/del-user/{usuario}(usuario=${usuario.getUsuario()})}" method="POST">
                                 <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-                                    <a href="/elimina-usuario/{{usuario.usuario}}">
-                                        <button type="submit" class="waves-effect waves-light btn-large color-back">Eliminar</button>
-                                    </a>
+                                    <button type="submit" class="waves-effect waves-light btn-large color-back">Eliminar</button>
                             </form>
                         </div>
                     </div>

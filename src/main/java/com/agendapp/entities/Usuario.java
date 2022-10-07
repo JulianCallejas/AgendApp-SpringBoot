@@ -103,7 +103,7 @@ public class Usuario {
         return "Usuario{" + "id=" + id + ", usuario=" + usuario + ", email=" + email + ", contrasena=" + contrasena + ", administrador=" + administrador + '}';
     }
     
-    @OneToOne(cascade=CascadeType.ALL)
+    @OneToOne
     @JoinColumn(name = "Usuario")
     private Empleado empleado;
 

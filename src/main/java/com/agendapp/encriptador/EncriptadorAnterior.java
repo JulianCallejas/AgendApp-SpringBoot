@@ -12,7 +12,7 @@ import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
 import javax.crypto.spec.SecretKeySpec;
 
-public class Encriptador {
+public class EncriptadorAnterior {
 
     /**
      * Crea la clave de encriptacion usada internamente

@@ -29,47 +29,67 @@
             'Agendapp de ' + ${usuarioConsulta.getEmpleado().getNombre()} + ' (' + ${usuarioConsulta.getUsuario()} + ')'"
             style="text-align: center;">Tu Agendapp</h1>
 
-        <div class="contenedor">
-            <div class="filter"></div>
-            <th:block th:each="i: ${#numbers.sequence(0,totalTareas)}">
-                <th:block th:switch="${agenda.getTarea().get(i).getEstado()}">
-                    <th:block th:case="'Pendiente'">
-                        <div class="caja" th:id="${i}">
-                            <a th:href="@{/task/{id}(id=${agenda.getTarea().get(i).id_tarea})}">
-                                <h3 th:text="${agenda.getTarea().get(i).getTitulo_tarea()}">{{  tareas[nu].10 }}</h3>
-                                <p th:text="${agenda.getTarea().get(i).getDescripcion()}">{{ tareas[nu].11 }}</p>
-                                <div th:text="${agenda.getTarea().get(i).getFecha()} + ' ' + ${agenda.getTarea().get(i).getHora_inicio()} " class="hora">{{ tareas[nu].7 }} {{tareas[nu].8}}</div>
-                            </a>
-                        </div>
-                    </th:block>
+        <th:block th:switch="${totalTareas}">
 
-                    <th:block th:case="'Completa'">
-                        <div class="ter caja" th:id="${i}">
-                            <a th:href="@{/task/{id}(id=${agenda.getTarea().get(i).id_tarea})}">
-                                <h3 th:text="${agenda.getTarea().get(i).getTitulo_tarea()}">{{  tareas[nu].10 }}</h3>
-                                <p th:text="${agenda.getTarea().get(i).getDescripcion()}">{{ tareas[nu].11 }}</p>
-                                <div th:text="${agenda.getTarea().get(i).getFecha()} + ' ' + ${agenda.getTarea().get(i).getHora_inicio()} " class="hora">{{ tareas[nu].7 }} {{tareas[nu].8}}</div>
-                            </a>
-                        </div>
-                    </th:block>
+            <th:block th:case="-1">
+                <div class="contenedor">
+                    <div class="filter"></div>
+                    <div class="caja" th:id="0">
+                        <a th:href="'#'">
+                            <h3 th:text="'No hay Tareas'">{{  tareas[nu].10 }}</h3>
+                            <p th:text="'Puede agregar una nueva tarea con el boton agregar'">{{ tareas[nu].11 }}</p>
+                            <div th:text="' '" class="hora"></div>
+                        </a>
+                    </div>
+                </div>
 
-
-                </th:block>
 
             </th:block>
-            <div class="ver-mas">
-                <a th:href="'/dashBoard/'+${pagina + 1}+'#'+${pagina * 3}">
-                    <span class="material-symbols-outlined">
-                        expand_more
-                    </span>
-                </a>
-                <a href="#">
-                    <span class="material-symbols-outlined">
-                        expand_less
-                    </span>
-                </a>
-            </div>
-        </div>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
+            <th:block th:case="*">
+
+                <div class="contenedor">
+                    <div class="filter"></div>
+                    <th:block th:each="i: ${#numbers.sequence(0,totalTareas)}">
+                        <th:block th:switch="${agenda.getTarea().get(i).getEstado()}">
+                            <th:block th:case="'Pendiente'">
+                                <div class="caja" th:id="${i}">
+                                    <a th:href="@{/task/{id}(id=${agenda.getTarea().get(i).id_tarea})}">
+                                        <h3 th:text="${agenda.getTarea().get(i).getTitulo_tarea()}">{{  tareas[nu].10 }}</h3>
+                                        <p th:text="${agenda.getTarea().get(i).getDescripcion()}">{{ tareas[nu].11 }}</p>
+                                        <div th:text="${agenda.getTarea().get(i).getFecha()} + ' ' + ${agenda.getTarea().get(i).getHora_inicio()} " class="hora">{{ tareas[nu].7 }} {{tareas[nu].8}}</div>
+                                    </a>
+                                </div>
+                            </th:block>
+
+                            <th:block th:case="'Completa'">
+                                <div class="ter caja" th:id="${i}">
+                                    <a th:href="@{/task/{id}(id=${agenda.getTarea().get(i).id_tarea})}">
+                                        <h3 th:text="${agenda.getTarea().get(i).getTitulo_tarea()}">{{  tareas[nu].10 }}</h3>
+                                        <p th:text="${agenda.getTarea().get(i).getDescripcion()}">{{ tareas[nu].11 }}</p>
+                                        <div th:text="${agenda.getTarea().get(i).getFecha()} + ' ' + ${agenda.getTarea().get(i).getHora_inicio()} " class="hora">{{ tareas[nu].7 }} {{tareas[nu].8}}</div>
+                                    </a>
+                                </div>
+                            </th:block>
+
+
+                        </th:block>
+
+                    </th:block>
+                    <div class="ver-mas">
+                        <a th:href="'/dashBoard/'+${pagina + 1}+'#'+${pagina * 3}">
+                            <span class="material-symbols-outlined">
+                                expand_more
+                            </span>
+                        </a>
+                        <a href="#">
+                            <span class="material-symbols-outlined">
+                                expand_less
+                            </span>
+                        </a>
+                    </div>
+                </div>
+            </th:block>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
     </body>
 </html>

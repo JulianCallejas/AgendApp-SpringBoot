@@ -17,6 +17,13 @@
             <div class="form-container sign-in-container">
                 <form th:action="@{/login}" th:object=="${usuario}" method="post">
                     <div class="inputs">
+                        <th:block th:if="${mensaje} != null">
+                        <div class="alert alert-primary alert-dismissible" role="alert">
+                            <br>
+                            <strong th:text="${mensaje}"></strong>
+                            <br><br>
+                        </div>
+                        </th:block>
                         <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                         <div class="input-field col s6">
                             <input th:field="*{username}" name="username" type="text" placeholder="Usuario">
@@ -28,7 +35,7 @@
                         </div>
                     </div>
                     <button class="btn waves-effect waves-yellow" type="submit">Iniciar sesión</button>
-                    <h6>Olvide mi Contraseña</h6>
+                    
                 </form>
             </div>
         </div>

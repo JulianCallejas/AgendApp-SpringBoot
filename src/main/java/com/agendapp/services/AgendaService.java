@@ -10,7 +10,7 @@ public interface AgendaService {
     
     public List<Agenda> listarAgendas();
 
-    public Agenda guardarTarea(Agenda agenda);
+    public Agenda guardarAgenda(Agenda agenda);
 
     public Optional<Agenda> buscarAgendaPorId(long idAgenda);
 

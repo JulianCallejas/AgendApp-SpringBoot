@@ -44,4 +44,15 @@ public class UsuarioServiceImpl implements UsuarioService {
         return usuarioRepo.findFilter(filtro);
     }
 
+    @Override
+    public Usuario borrarUsuarioPorUsuario(String usuario) {
+         return usuarioRepo.borrarPorUsuario(usuario);
+    }
+
+    @Override
+    public Usuario crearUsuario(String usuario, String email, String contrasena, boolean administrador, String Id_Empleado, String nombre, String apellido, String cargo) {
+        return usuarioRepo.crearUsuario(usuario, email, contrasena, administrador, Id_Empleado, nombre, apellido, cargo);
+    }
+
+    
 }

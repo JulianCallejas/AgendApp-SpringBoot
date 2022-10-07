@@ -27,6 +27,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -53,6 +54,9 @@ public class AgendappController {
     @Autowired
     private TareaServiceImpl tareaService;
 
+    @Autowired
+    BCryptPasswordEncoder encriptadorService;
+
     private void setUsuarioLogueado() {
 
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -74,9 +78,20 @@ public class AgendappController {
     @GetMapping("/login")
     public String getLogIn(Model modelo) {
         modelo.addAttribute("usuario", new Usulog());
+        modelo.addAttribute("mensaje", null);
         return "login";
     }
 
+    
+    @GetMapping("/login/no-autorizado")
+    public String getLogInNoAutorizado(Model modelo) {
+        modelo.addAttribute("mensaje", "Usuario o contraseña invalidos");
+        modelo.addAttribute("usuario", new Usulog());
+        return "login";
+    }
+    
+    
+    
     @GetMapping("/cerrar-sesion")
     public String getCerrarSesion(Model modelo) {
         this.usuarioLogueado = null;
@@ -109,6 +124,7 @@ public class AgendappController {
 
         long totalTareas = agenda.getTarea().size();
         totalTareas = totalTareas > ((pagina * 3) - 1) ? ((pagina * 3) - 1) : totalTareas - 1;
+        System.out.println(totalTareas);
 
         modelo.addAttribute("usuarioLogueado", this.usuarioLogueado);
         modelo.addAttribute("usuarioConsulta", this.usuarioConsulta);
@@ -317,6 +333,7 @@ public class AgendappController {
         List<Usuario> usuarios = usuarioService.filtrarUsuarios(filtro);
         long pagina = 1;
         long totalUsuarios = usuarios.size() - 1;
+        filtro = usuarios.size()==0 ? "null" : filtro;
 
 //        totalUsuarios = totalUsuarios > ((pagina * 3) - 1) ? ((pagina * 3) - 1) : totalUsuarios - 1;
         modelo.addAttribute("usuarioLogueado", this.usuarioLogueado);
@@ -357,10 +374,62 @@ public class AgendappController {
 
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping("/new-user")
-    public String crearUsuario(@PathVariable String usuario, Model modelo) {
-        modelo.addAttribute("usuario", usuarioService.buscarUsuarioPorUsuario(usuario));
-        return "ususario";
+    public String getCrearUsuario(Model modelo) {
+
+        modelo.addAttribute("usuario", null);
+        modelo.addAttribute("usuarioLogueado", this.usuarioLogueado);
+        modelo.addAttribute("usuarioConsulta", this.usuarioConsulta);
+        modelo.addAttribute("mensaje", null);
+
+        return "new-ususario";
+
+    }
+
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PostMapping("/new-user")
+    public String postCrearUsuario(@RequestParam(value = "fusuario", defaultValue = "") String fusuario,
+            @RequestParam(value = "fcontrasena", defaultValue = "") String fcontrasena,
+            @RequestParam(value = "fcontrasena2", defaultValue = "") String fcontrasena2,
+            @RequestParam(value = "femail", defaultValue = "") String femail,
+            @RequestParam(value = "fnumeroid", defaultValue = "") String fnumeroid,
+            @RequestParam(value = "fnombre", defaultValue = "") String fnombre,
+            @RequestParam(value = "fapellido", defaultValue = "") String fapellido,
+            @RequestParam(value = "fcargo", defaultValue = "") String fcargo,
+            Model modelo) {
+
+        String resultado = "exito";
+        String mensaje = "Usuario creado correctamente";
+
+        try {
+
+            if (!fcontrasena.equals(fcontrasena2)) {
+                resultado = "fallo";
+                mensaje = "La contraseña no coincide";
+            }
+            if (resultado.equals("exito")) {
+                Usuario nuevoUsuario = usuarioService.crearUsuario(fusuario, femail, fcontrasena, false, fnumeroid, fnombre, fapellido, fcargo);
+                Empleado nuevoEmpleado = new Empleado(fnumeroid, fusuario, fnombre, fapellido, fcargo);
+                Agenda nuevaAgenda = new Agenda(fusuario);
+                System.out.println(nuevoUsuario);
+                System.out.println(nuevoEmpleado);
+                System.out.println(nuevaAgenda);
+                
+            }
+
+        } catch (Exception e) {
+            resultado = "fallo";
+            mensaje = e.toString();
+        }
+
+        modelo.addAttribute("usuario", null);
+        modelo.addAttribute("usuarioLogueado", this.usuarioLogueado);
+        modelo.addAttribute("usuarioConsulta", this.usuarioConsulta);
+        modelo.addAttribute("resultado", resultado);
+        modelo.addAttribute("mensaje", mensaje);
+
+        return "new-ususario";
     }
 
     @GetMapping("/user/{usuario}")
@@ -392,8 +461,10 @@ public class AgendappController {
 
         try {
             if (fcontrasena.length() > 0) {
+                System.out.println(fcontrasena);
+                System.out.println(fcontrasena2);
                 if (fcontrasena.equals(fcontrasena2)) {
-                    usuarioExiste.setContrasena(fcontrasena);
+                    usuarioExiste.setContrasena(encriptadorService.encode(fcontrasena));
                 } else {
                     resultado = "fallo";
                     mensaje = "La contraseña no coincide";
@@ -423,6 +494,31 @@ public class AgendappController {
         modelo.addAttribute("mensaje", mensaje);
 
         return "ususario";
+    }
+
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PostMapping("/del-user/{usuario}")
+    public String postBorrarUsuario(@PathVariable String usuario, Model modelo) {
+
+        Usuario usuarioBorrar = usuarioService.buscarUsuarioPorUsuario(usuario);
+
+        String resultado = "exito";
+        String mensaje = "Usuario borrado correctamente";
+
+        try {
+            Usuario usuborrado = usuarioService.borrarUsuarioPorUsuario(usuarioBorrar.getUsuario());
+        } catch (Exception e) {
+            resultado = "fallo";
+            mensaje = e.toString();
+        }
+
+        modelo.addAttribute("usuario", usuarioBorrar);
+        modelo.addAttribute("usuarioLogueado", this.usuarioLogueado);
+        modelo.addAttribute("usuarioConsulta", this.usuarioConsulta);
+        modelo.addAttribute("resultado", resultado);
+        modelo.addAttribute("mensaje", mensaje);
+
+        return "del-ususario";
     }
 
 }

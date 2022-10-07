@@ -22,7 +22,7 @@ public class AgendaServiceImpl implements AgendaService{
     }
 
     @Override
-    public Agenda guardarTarea(Agenda agenda) {
+    public Agenda guardarAgenda(Agenda agenda) {
         return agendaRepo.save(agenda);
     }
 
