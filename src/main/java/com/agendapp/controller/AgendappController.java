@@ -71,8 +71,10 @@ public class AgendappController {
     }
 
     @GetMapping({"/", "/index"})
-    public String getIndex() {
-        return "redirect:/login";
+    public String getIndex(Model modelo) {
+        modelo.addAttribute("usuario", new Usulog());
+        modelo.addAttribute("mensaje", null);
+        return "login";
     }
 
     @GetMapping("/login")
@@ -82,16 +84,13 @@ public class AgendappController {
         return "login";
     }
 
-    
     @GetMapping("/login/no-autorizado")
     public String getLogInNoAutorizado(Model modelo) {
         modelo.addAttribute("mensaje", "Usuario o contraseña invalidos");
         modelo.addAttribute("usuario", new Usulog());
         return "login";
     }
-    
-    
-    
+
     @GetMapping("/cerrar-sesion")
     public String getCerrarSesion(Model modelo) {
         this.usuarioLogueado = null;
@@ -333,7 +332,7 @@ public class AgendappController {
         List<Usuario> usuarios = usuarioService.filtrarUsuarios(filtro);
         long pagina = 1;
         long totalUsuarios = usuarios.size() - 1;
-        filtro = usuarios.size()==0 ? "null" : filtro;
+        filtro = usuarios.size() == 0 ? "null" : filtro;
 
 //        totalUsuarios = totalUsuarios > ((pagina * 3) - 1) ? ((pagina * 3) - 1) : totalUsuarios - 1;
         modelo.addAttribute("usuarioLogueado", this.usuarioLogueado);
@@ -415,7 +414,7 @@ public class AgendappController {
                 System.out.println(nuevoUsuario);
                 System.out.println(nuevoEmpleado);
                 System.out.println(nuevaAgenda);
-                
+
             }
 
         } catch (Exception e) {
