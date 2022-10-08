@@ -1,6 +1,5 @@
 package com.agendapp;
 
-import com.agendapp.entities.Rol;
 import com.agendapp.services.UsuarioLogServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
