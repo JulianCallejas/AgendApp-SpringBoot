@@ -104,7 +104,7 @@ public class Usuario {
     }
     
     @OneToOne
-    @JoinColumn(name = "Usuario")
+    @JoinColumn(name = "Usuario", referencedColumnName = "Usuario")
     private Empleado empleado;
 
     public Empleado getEmpleado() {
