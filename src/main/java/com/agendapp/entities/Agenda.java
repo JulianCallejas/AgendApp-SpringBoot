@@ -1,8 +1,6 @@
-
 package com.agendapp.entities;
 
 import java.util.List;
-import javax.annotation.Generated;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -13,17 +11,15 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-
-
 @Entity
-@Table(name="agendas")
+@Table(name = "agendas")
 public class Agenda {
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long idAgenda;
-    
-    @Column(name = "Usuario", nullable = false, length = 15, unique = false) 
+
+    @Column(name = "Usuario", nullable = false, length = 15, unique = false)
     private String usuario;
 
     public Agenda() {
@@ -43,8 +39,6 @@ public class Agenda {
         this.usuario = usuario;
     }
 
-    
-    
     public long getIdAgenda() {
         return idAgenda;
     }
@@ -66,8 +60,8 @@ public class Agenda {
         return "Agenda{" + "idAgenda=" + idAgenda + ", usuario=" + usuario + '}';
     }
 
-    @OneToMany (fetch = FetchType.EAGER)
-    @JoinColumn (name="IdAgenda", referencedColumnName="IdAgenda")
+    @OneToMany(fetch = FetchType.EAGER)
+    @JoinColumn(name = "IdAgenda", referencedColumnName = "IdAgenda")
     private List<Tarea> tarea;
 
     public List<Tarea> getTarea() {
@@ -77,5 +71,5 @@ public class Agenda {
     public void setTarea(List<Tarea> tarea) {
         this.tarea = tarea;
     }
-    
+
 }

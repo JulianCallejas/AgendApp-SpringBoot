@@ -1,4 +1,3 @@
-
 package com.agendapp.services;
 
 import com.agendapp.entities.Empleado;
@@ -9,11 +8,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class EmpleadoServiceImpl implements EmpleadoService{
+public class EmpleadoServiceImpl implements EmpleadoService {
 
     @Autowired
     private EmpleadoRepository empleadoRepo;
-    
+
     @Override
     public List<Empleado> listarEmpleados() {
         return empleadoRepo.findAll();
@@ -33,5 +32,5 @@ public class EmpleadoServiceImpl implements EmpleadoService{
     public Empleado buscarEmpleadoPorUsuario(String usuario) {
         return empleadoRepo.findByUsuario(usuario);
     }
-    
+
 }

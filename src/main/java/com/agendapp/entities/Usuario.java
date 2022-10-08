@@ -1,7 +1,5 @@
-
 package com.agendapp.entities;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -12,23 +10,23 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="usuarios")
+@Table(name = "usuarios")
 public class Usuario {
-    
+
     @Id  //Establece el id de la tabla
-    @GeneratedValue(strategy = GenerationType.IDENTITY )  //Genera autonumerico
+    @GeneratedValue(strategy = GenerationType.IDENTITY)  //Genera autonumerico
     private long id;
-    
-    @Column(name = "Usuario", nullable = false, length = 15, unique = true, insertable = false, updatable = false) 
+
+    @Column(name = "Usuario", nullable = false, length = 15, unique = true, insertable = false, updatable = false)
     private String usuario;
-    
-    @Column(name = "Email", nullable = false, length = 45, unique = true)   
+
+    @Column(name = "Email", nullable = false, length = 45, unique = true)
     private String email;
-    
-    @Column(name = "Contrasena", nullable = false, length = 65)   
+
+    @Column(name = "Contrasena", nullable = false, length = 65)
     private String contrasena;
-    
-    @Column(name = "Administrador")   
+
+    @Column(name = "Administrador")
     private boolean administrador;
 
     public Usuario() {
@@ -102,7 +100,7 @@ public class Usuario {
     public String toString() {
         return "Usuario{" + "id=" + id + ", usuario=" + usuario + ", email=" + email + ", contrasena=" + contrasena + ", administrador=" + administrador + '}';
     }
-    
+
     @OneToOne
     @JoinColumn(name = "Usuario", referencedColumnName = "Usuario")
     private Empleado empleado;
@@ -115,6 +113,4 @@ public class Usuario {
         this.empleado = empleado;
     }
 
-    
-    
 }

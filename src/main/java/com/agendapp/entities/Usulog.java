@@ -1,6 +1,4 @@
-
 package com.agendapp.entities;
-
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -16,7 +14,8 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 @Entity
-public class Usulog implements UserDetails{
+public class Usulog implements UserDetails {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -32,7 +31,7 @@ public class Usulog implements UserDetails{
     public void setId(Long id) {
         this.id = id;
     }
-    
+
     @Override
     public String getUsername() {
         return username;
@@ -41,7 +40,7 @@ public class Usulog implements UserDetails{
     public void setUsername(String username) {
         this.username = username;
     }
-    
+
     @Override
     public String getPassword() {
         return password;
@@ -64,16 +63,15 @@ public class Usulog implements UserDetails{
         this.password = password;
         this.rol = rol;
     }
-    
+
     public Usulog(String username, String password) {
         this.username = username;
         this.password = password;
-        
+
     }
-    
+
     public Usulog() {
-        
-        
+
     }
 
     @Override

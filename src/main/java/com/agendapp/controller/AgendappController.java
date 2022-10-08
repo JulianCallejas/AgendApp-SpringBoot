@@ -1,6 +1,5 @@
 package com.agendapp.controller;
 
-import com.agendapp.encriptador.Encriptador;
 import com.agendapp.entities.Agenda;
 import com.agendapp.entities.Empleado;
 import com.agendapp.entities.Tarea;
@@ -10,19 +9,9 @@ import com.agendapp.services.AgendaServiceImpl;
 import com.agendapp.services.EmpleadoServiceImpl;
 import com.agendapp.services.TareaServiceImpl;
 import com.agendapp.services.UsuarioServiceImpl;
-import java.io.UnsupportedEncodingException;
-import java.security.InvalidKeyException;
-import java.security.NoSuchAlgorithmException;
 import java.sql.Date;
-import java.sql.Time;
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Optional;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.crypto.BadPaddingException;
-import javax.crypto.IllegalBlockSizeException;
-import javax.crypto.NoSuchPaddingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -82,16 +71,13 @@ public class AgendappController {
         return "login";
     }
 
-    
     @GetMapping("/login/no-autorizado")
     public String getLogInNoAutorizado(Model modelo) {
         modelo.addAttribute("mensaje", "Usuario o contraseña invalidos");
         modelo.addAttribute("usuario", new Usulog());
         return "login";
     }
-    
-    
-    
+
     @GetMapping("/cerrar-sesion")
     public String getCerrarSesion(Model modelo) {
         this.usuarioLogueado = null;
@@ -333,7 +319,7 @@ public class AgendappController {
         List<Usuario> usuarios = usuarioService.filtrarUsuarios(filtro);
         long pagina = 1;
         long totalUsuarios = usuarios.size() - 1;
-        filtro = usuarios.size()==0 ? "null" : filtro;
+        filtro = usuarios.size() == 0 ? "null" : filtro;
 
 //        totalUsuarios = totalUsuarios > ((pagina * 3) - 1) ? ((pagina * 3) - 1) : totalUsuarios - 1;
         modelo.addAttribute("usuarioLogueado", this.usuarioLogueado);
@@ -415,7 +401,7 @@ public class AgendappController {
                 System.out.println(nuevoUsuario);
                 System.out.println(nuevoEmpleado);
                 System.out.println(nuevaAgenda);
-                
+
             }
 
         } catch (Exception e) {

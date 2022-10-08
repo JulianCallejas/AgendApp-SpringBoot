@@ -1,4 +1,3 @@
-
 package com.agendapp.entities;
 
 import javax.persistence.Column;
@@ -6,25 +5,23 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-
 @Entity
-@Table(name="empleados")
+@Table(name = "empleados")
 public class Empleado {
-    
-    
+
     @Column(name = "Id_Empleado", nullable = false, length = 12, unique = true)
     private String id_empleado;
-    
+
     @Id
     @Column(name = "Usuario", nullable = false, length = 15, unique = true)
     private String usuario;
-    
+
     @Column(name = "Nombre", nullable = true, length = 45, unique = false)
     private String nombre;
-    
+
     @Column(name = "Apellido", nullable = true, length = 45, unique = false)
     private String apellido;
-    
+
     @Column(name = "Cargo", nullable = true, length = 45, unique = false)
     private String cargo;
 
@@ -46,8 +43,6 @@ public class Empleado {
         this.apellido = apellido;
         this.cargo = cargo;
     }
-    
-    
 
     public Empleado(String usuario) {
         this.usuario = usuario;
@@ -97,9 +92,9 @@ public class Empleado {
     public String toString() {
         return "Empleado{" + "id_empleado=" + id_empleado + ", usuario=" + usuario + ", nombre=" + nombre + ", apellido=" + apellido + ", cargo=" + cargo + '}';
     }
-    
-    public String getNombreCompleto(){
+
+    public String getNombreCompleto() {
         return this.nombre + " " + this.apellido;
     }
-    
+
 }

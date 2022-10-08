@@ -18,16 +18,16 @@ public class UsuarioLogServiceImpl implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        
+
         Usulog userDetails = null;
         try {
             Usuario usuario = usuarioRepo.findByUsuario(username);
-            if (usuario != null){
-                userDetails = new Usulog(usuario.getUsuario(), usuario.getContrasena(),usuario.isAdministrador() ? Rol.ROLE_ADMIN : Rol.ROLE_USER);
-            }else{
+            if (usuario != null) {
+                userDetails = new Usulog(usuario.getUsuario(), usuario.getContrasena(), usuario.isAdministrador() ? Rol.ROLE_ADMIN : Rol.ROLE_USER);
+            } else {
                 userDetails = null;
             }
-            
+
         } catch (Exception e) {
             System.out.println(e.toString());
         }

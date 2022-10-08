@@ -1,4 +1,3 @@
-
 package com.agendapp.services;
 
 import com.agendapp.entities.Tarea;
@@ -8,14 +7,11 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-
-
 @Service
 public class TareaServiceImpl implements TareaService {
-    
+
     @Autowired
     private TareaRepository tareaRepo;
-    
 
     @Override
     public List<Tarea> listarTareas() {
@@ -47,8 +43,4 @@ public class TareaServiceImpl implements TareaService {
         tareaRepo.delete(tarea);
     }
 
-    
-    
-    
-    
 }

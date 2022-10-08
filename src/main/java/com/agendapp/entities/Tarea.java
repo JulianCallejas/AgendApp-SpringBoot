@@ -1,63 +1,56 @@
-
 package com.agendapp.entities;
 
-
 import java.sql.Date;
-
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "tareas")
 public class Tarea {
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id_tarea;
-    
-    @Column(name = "Usuario", nullable = false, length = 15, unique = false) 
+
+    @Column(name = "Usuario", nullable = false, length = 15, unique = false)
     private String usuario;
-    
-    @Column(name = "Creadapor", nullable = false, length = 15, unique = false) 
+
+    @Column(name = "Creadapor", nullable = false, length = 15, unique = false)
     private String creadaPor;
-    
-    @Column(name = "Fecha", nullable = false) 
+
+    @Column(name = "Fecha", nullable = false)
     private Date fecha;
-    
-    @Column(name = "Hora_Inicio") 
+
+    @Column(name = "Hora_Inicio")
     private String hora_inicio;
-    
-    @Column(name = "Hora_Final") 
+
+    @Column(name = "Hora_Final")
     private String hora_final;
-    
-    @Column(name = "Titulo_Tarea", nullable = false, length = 45, unique = false) 
+
+    @Column(name = "Titulo_Tarea", nullable = false, length = 45, unique = false)
     private String titulo_tarea;
-    
-    @Column(name = "Descripcion", nullable = false, length = 255, unique = false) 
+
+    @Column(name = "Descripcion", nullable = false, length = 255, unique = false)
     private String descripcion;
-    
-    @Column(name = "Comentarios", nullable = true, unique = false) 
+
+    @Column(name = "Comentarios", nullable = true, unique = false)
     private String comentarios;
-    
+
     @Column(name = "Estado", nullable = true, length = 45, unique = false)
     private String estado;
-    
-    @Column(name = "Fecha_Creacion") 
+
+    @Column(name = "Fecha_Creacion")
     private Date fecha_creacion;
-    
-    @Column(name = "Fecha_Cierre") 
+
+    @Column(name = "Fecha_Cierre")
     private Date fecha_cierre;
-    
+
     @Column(name = "IdAgenda", nullable = false)
     private long idAgenda;
-    
 
     public long getIdAgenda() {
         return idAgenda;
@@ -66,9 +59,7 @@ public class Tarea {
     public void setIdAgenda(long idAgenda) {
         this.idAgenda = idAgenda;
     }
-    
 
-    
     public Tarea() {
         super();
     }
@@ -79,7 +70,7 @@ public class Tarea {
         this.fecha = fecha;
         this.titulo_tarea = titulo_tarea;
         this.descripcion = descripcion;
-        
+
     }
 
     public Tarea(long id_tarea, String usuario, String creadaPor, Date fecha, String hora_inicio, String hora_final, String titulo_tarea, String descripcion, String comentarios, String estado, Date fecha_creacion, Date fecha_cierre, long idAgenda) {
@@ -95,7 +86,7 @@ public class Tarea {
         this.estado = estado;
         this.fecha_creacion = fecha_creacion;
         this.fecha_cierre = fecha_cierre;
-       
+
     }
 
     public long getId_tarea() {
@@ -194,34 +185,28 @@ public class Tarea {
         this.fecha_cierre = fecha_cierre;
     }
 
-   public boolean compararHoras(){
-       
-       if (this.hora_final == null){
-           return true;
-       }
-       
-       if (this.hora_inicio == null){
-           return true;
-       }else{
-           float hi = Float.valueOf(this.hora_inicio.substring(0, 2)) + Float.valueOf(this.hora_inicio.substring(3, 5))/60;
-           float hf = Float.valueOf(this.hora_final.substring(0, 2)) + Float.valueOf(this.hora_final.substring(3, 5))/60;
-           
-           if (hi>hf){
-               return false;
-           }
-       }
-       return true;
-   }
+    public boolean compararHoras() {
 
-    
+        if (this.hora_final == null) {
+            return true;
+        }
+
+        if (this.hora_inicio == null) {
+            return true;
+        } else {
+            float hi = Float.valueOf(this.hora_inicio.substring(0, 2)) + Float.valueOf(this.hora_inicio.substring(3, 5)) / 60;
+            float hf = Float.valueOf(this.hora_final.substring(0, 2)) + Float.valueOf(this.hora_final.substring(3, 5)) / 60;
+
+            if (hi > hf) {
+                return false;
+            }
+        }
+        return true;
+    }
 
     @Override
     public String toString() {
         return "Tarea{" + "id_tarea=" + id_tarea + ", usuario=" + usuario + ", creadaPor=" + creadaPor + ", fecha=" + fecha + ", hora_inicio=" + hora_inicio + ", hora_final=" + hora_final + ", titulo_tarea=" + titulo_tarea + ", descripcion=" + descripcion + ", comentarios=" + comentarios + ", estado=" + estado + ", fecha_creacion=" + fecha_creacion + ", fecha_cierre=" + fecha_cierre + '}';
     }
-    
-    
-    
-    
-    
+
 }

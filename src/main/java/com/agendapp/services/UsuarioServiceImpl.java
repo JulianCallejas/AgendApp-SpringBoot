@@ -46,7 +46,7 @@ public class UsuarioServiceImpl implements UsuarioService {
 
     @Override
     public Usuario borrarUsuarioPorUsuario(String usuario) {
-         return usuarioRepo.borrarPorUsuario(usuario);
+        return usuarioRepo.borrarPorUsuario(usuario);
     }
 
     @Override
@@ -54,5 +54,4 @@ public class UsuarioServiceImpl implements UsuarioService {
         return usuarioRepo.crearUsuario(usuario, email, contrasena, administrador, Id_Empleado, nombre, apellido, cargo);
     }
 
-    
 }
